@@ -23,7 +23,7 @@ library(semTools)
 
 ```
 
-##third 
+##Second 
 #import the dataset and define data
 ```{r}
 data<-haven::read_sav("CFA-Data.sav")%>%
