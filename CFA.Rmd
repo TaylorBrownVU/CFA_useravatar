@@ -14,30 +14,24 @@ library(dplyr)
 ```
 
 ##First
-#Install CFA & EFA packages with Lavaan & Lavaan Plot
-
-```{r}
-install.packages("lavaan")
-install.packages("lavaanPlot")
-install.packages("semTools")
-install.packages("semPlot")
-install.packages("psych")
-
-```
-##Second
 #run packages
 
 ```{r}
 library (lavaan)
 library(lavaanPlot)
-library (semPlot)
 library(semTools)
-library(psych)
 
 ```
 
 ##third 
-#import the dataset
+#import the dataset and define data
+```{r}
+data<-haven::read_sav("CFA-Data.sav")%>%
+  mutate_if(is.character, as.factor)
+
+```
+
+
 
 ##Specify the different models
 ```{r}
@@ -48,7 +42,7 @@ onefactormodel <- "useravatar =~ W2_Dis1 + W2_Dis2 + W2_Dis6 + W2_Dis7 + W2_Dis8
 
 #Fit the model and save the results
 ```{r}
-fit1 <- cfa(onefactormodel, data = CFA_Data, estimator= "DWLS")
+fit1 <- cfa(onefactormodel, data = data, estimator= "DWLS")
 
 summary(fit1, fit.measures=TRUE, standardized=TRUE)
 ```
@@ -81,7 +75,7 @@ lavaanPlot(model = fit1, node_options = list(shape = "box", fontname = "Helvetic
 ##same model with different estimator ML
 
 ```{r}
-Fit2 <- cfa(onefactormodel, data = CFA_Data, estimator = "MLM")
+Fit2 <- cfa(onefactormodel, data = data, estimator = "MLM")
 
 summary(Fit2, fit.measures=TRUE, standardized=TRUE)
 
@@ -97,7 +91,7 @@ lavaanPlot(model = Fit2, node_options = list(shape = "box", fontname = "Helvetic
 ##same model with different estimator WLS
 
 ```{r}
-fit3 <- cfa(onefactormodel, data = CFA_Data, estimator = "WLS")
+fit3 <- cfa(onefactormodel, data = data, estimator = "WLS")
 
 summary(fit3, fit.measures=TRUE, standardized=TRUE)
 
