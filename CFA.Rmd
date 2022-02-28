@@ -1,0 +1,108 @@
+---
+title: "CFA"
+author: "Taylor Brown"
+date: '2022-02-28'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(knitr)
+library(dplyr)
+
+```
+
+##First
+#Install CFA & EFA packages with Lavaan & Lavaan Plot
+
+```{r}
+install.packages("lavaan")
+install.packages("lavaanPlot")
+install.packages("semTools")
+install.packages("semPlot")
+
+```
+##Second
+#run packages
+
+```{r}
+library (lavaan)
+library(lavaanPlot)
+library(semTools)
+```
+
+##third 
+#import the dataset
+
+##Specify the different models
+```{r}
+onefactormodel <- "useravatar =~ W2_Dis1 + W2_Dis2 + W2_Dis6 + W2_Dis7 + W2_Dis8Rev + W2_Dis9 + W2_Dis10Rev + W2_Dis15Rev"
+```
+
+##Fit the model
+
+#Fit the model and save the results
+```{r}
+fit1 <- cfa(onefactormodel, data = CFA_Data, estimator= "DWLS")
+
+summary(fit1, fit.measures=TRUE, standardized=TRUE)
+```
+
+
+##Saved the table for fit 1
+```{r}
+tableformat1<-summary(fit1, fit.measures=TRUE, standardized=TRUE) 
+
+modificationindices(fit1, sort. = TRUE)
+
+```
+
+##Get Omega reliability for factors using 'semTools' package
+
+```{r}
+
+reliability(fit1, omit.imps = c("no.conv", "no.se"))
+
+
+```
+
+##graph the model
+```{r}
+lavaanPlot(model = fit1, edge_options = list(color = "grey"))
+
+lavaanPlot(model = fit1, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coef = FALSE)
+```
+
+##same model with different estimator ML
+
+```{r}
+Fit2 <- cfa(onefactormodel, data = CFA_Data, estimator = "MLM")
+
+summary(Fit2, fit.measures=TRUE, standardized=TRUE)
+
+tableformat2<-summary(Fit2, fit.measures=TRUE, standardized=TRUE)
+
+modificationindices(Fit2, sort. = TRUE)
+
+reliability(Fit2, omit.imps = c("no.conv", "no.se"))
+
+lavaanPlot(model = Fit2, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coef = FALSE)
+```
+
+##same model with different estimator WLS
+
+```{r}
+fit3 <- cfa(onefactormodel, data = CFA_Data, estimator = "WLS")
+
+summary(fit3, fit.measures=TRUE, standardized=TRUE)
+
+tableformat3<-summary(fit3, fit.measures=TRUE, standardized=TRUE)
+
+modificationindices(fit3, sort. = TRUE)
+
+reliability(fit3, omit.imps = c("no.conv", "no.se"))
+
+```
+
+##THE END##
