@@ -21,6 +21,7 @@ install.packages("lavaan")
 install.packages("lavaanPlot")
 install.packages("semTools")
 install.packages("semPlot")
+install.packages("psych")
 
 ```
 ##Second
@@ -29,7 +30,10 @@ install.packages("semPlot")
 ```{r}
 library (lavaan)
 library(lavaanPlot)
+library (semPlot)
 library(semTools)
+library(psych)
+
 ```
 
 ##third 
